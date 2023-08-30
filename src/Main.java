@@ -21,7 +21,7 @@ public class Main {
             String respuestaSocketTCP=Coms.SendTCP(mensaje);    //Descomentar esta línea y la de abajo para probar el Socket TCP
             System.out.println(respuestaSocketTCP);
             //String respuestaServerTCP=Coms.Receive();      //Descomentar esta línea y la de abajo para probar el Server TCP
-            //System.out.println(respuestaServerTCP);
+            //System.out.println(respuestaServerTCP); //
         }
         catch (IOException e)
         {

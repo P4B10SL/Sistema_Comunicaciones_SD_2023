@@ -60,8 +60,6 @@ public class SistemaComunicaciones {
     }
     public String SendTCP(String mensaje){
         String confirmacion;
-        DataInputStream host_consola;
-        DataInputStream port_consola;
         // Declaracion del socket
         Socket so_check_port;
         // Declaracion del InputStream para el socket

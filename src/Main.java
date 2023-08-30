@@ -20,7 +20,7 @@ public class Main {
             //System.out.println(respuesta2);
             String respuestaSocketTCP=Coms.SendTCP(mensaje);    //Descomentar esta línea y la de abajo para probar el Socket TCP
             System.out.println(respuestaSocketTCP);
-            //String respuestaServerTCP=Coms.Receive(mensaje);      //Descomentar esta línea y la de abajo para probar el Server TCP
+            //String respuestaServerTCP=Coms.Receive();      //Descomentar esta línea y la de abajo para probar el Server TCP
             //System.out.println(respuestaServerTCP);
         }
         catch (IOException e)

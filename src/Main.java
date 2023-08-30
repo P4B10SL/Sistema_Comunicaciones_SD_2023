@@ -14,8 +14,8 @@ public class Main {
             System.out.println("Ingrese el mensaje a enviar:");
             DataInputStream mensajeEnviar = new DataInputStream(System.in);
             String mensaje = mensajeEnviar.readLine();
-            String respuesta = Coms.Send(mensaje);
-            System.out.println(respuesta);
+            //String respuesta = Coms.Send(mensaje);
+            //System.out.println(respuesta);
             //String respuesta2= Coms.Receive();
             //System.out.println(respuesta2);
             String respuestaSocketTCP=Coms.SendTCP(mensaje);    //Descomentar esta línea y la de abajo para probar el Socket TCP

@@ -1,7 +1,5 @@
-import java.io.DataInputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.InetAddress;
+import java.io.*;
+import java.net.*;
 
 public class SistemaComunicaciones {
     String ipDestino;
@@ -59,5 +57,88 @@ public class SistemaComunicaciones {
             respuesta="ERROR";
         }
         return respuesta;
+    }
+    public String SendTCP(String mensaje){
+        String confirmacion;
+        DataInputStream host_consola;
+        DataInputStream port_consola;
+        // Declaracion del socket
+        Socket so_check_port;
+        // Declaracion del InputStream para el socket
+        DataInputStream data_in_socket;
+        // Declaracion del InputStream para la linea de comandos
+        DataInputStream data_in_consola;
+        String linea;
+        //Declaracion del OutStream
+        PrintStream data_out_socket;
+        // Declaracion del nombre del host servidor daytime
+        try{
+            String host = ipDestino;
+            String port_string = "8001";
+            Integer port= Integer.parseInt(port_string);
+            //crea el socket y se intenta conectar
+            so_check_port = new Socket(host,port);
+
+            // crea el DataStream con InputStream del socket
+            data_in_socket = new DataInputStream(so_check_port.getInputStream());
+            // crea el PrintStream con el OutputStream del socket
+            data_out_socket = new PrintStream(so_check_port.getOutputStream());
+            //System.out.print("YOU: ");
+            // crea el Stream de entrada
+                //lee una linea desde la consola
+                linea = mensaje;
+                // envia la linea el Strem del Socket
+                data_out_socket.println(linea);
+                // lee los datos del InputSteeam del socket y
+                //los envia a la salida estandar
+            confirmacion="Enviado";
+            //cierra la conexion
+            so_check_port.close();
+        } // end try
+        catch (UnknownHostException e){
+            // si hubo error lo envia a la salida por defecto
+            System.out.println(e);
+            confirmacion="ERROR";
+        } // end catch
+
+        catch (IOException e) {
+            // si hubo error lo envia a la salida por defecto
+            System.out.println(e);
+            confirmacion="ERROR";
+        }
+        return confirmacion;
+    }
+    public String ReceiveTCP(){
+        ServerSocket serverSocket;
+        PrintStream data_out_conex;
+        DataInputStream data_in_consola;
+        DataInputStream texto_console;
+        String confirmacion;
+        try  {
+            String portString = "8001";
+            Integer port= Integer.parseInt(portString);
+            serverSocket = new ServerSocket(port);
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                // Creacion de los Input y Output Streams del cliente
+                BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
+
+                // Lectura del input del cliente y se lo envia devuelta como output
+                String line;
+                    texto_console = new DataInputStream(System.in);
+                    String texto = texto_console.readLine();
+                    output.println(texto);
+                confirmacion="Recibido";
+                // Cierre del socket cliente
+                clientSocket.close();
+                serverSocket.close();
+                System.out.println("Cliente desconectado");
+            }
+        } catch (IOException e) {
+            System.out.println(e);
+            confirmacion="ERROR";
+        }
+        return confirmacion;
     }
 }

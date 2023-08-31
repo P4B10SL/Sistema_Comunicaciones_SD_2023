@@ -72,7 +72,7 @@ public class SistemaComunicaciones {
         // Declaracion del nombre del host servidor daytime
         try{
             String host = ipDestino;
-            String port_string = "8001";
+            String port_string = "8080";
             Integer port= Integer.parseInt(port_string);
             //crea el socket y se intenta conectar
             so_check_port = new Socket(host,port);
@@ -113,29 +113,30 @@ public class SistemaComunicaciones {
         DataInputStream texto_console;
         String confirmacion;
         try  {
-            String portString = "8001";
+            String portString = "8080";
             Integer port= Integer.parseInt(portString);
             serverSocket = new ServerSocket(port);
-            while (true) {
+           // while (true) {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("HASTA ACA LLEGA");
                 // Creacion de los Input y Output Streams del cliente
                 BufferedReader input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                System.out.println(input.readLine());
                 PrintWriter output = new PrintWriter(clientSocket.getOutputStream(), true);
-
                 // Lectura del input del cliente y se lo envia devuelta como output
-                String line;
-                    texto_console = new DataInputStream(System.in);
-                    String texto = texto_console.readLine();
-                    output.println(texto);
-                confirmacion="Recibido";
+               // String line;
+                 //   texto_console = new DataInputStream(System.in);
+                   // String texto = texto_console.readLine();
+                   // output.println(texto);
+                confirmacion=input.readLine();
                 // Cierre del socket cliente
                 clientSocket.close();
                 serverSocket.close();
                 System.out.println("Cliente desconectado");
-            }
+            //}
         } catch (IOException e) {
             System.out.println(e);
-            confirmacion="ERROR";
+            confirmacion="ERROR"+e.toString();
         }
         return confirmacion;
     }
